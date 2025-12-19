@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { AnalysisResult, ResponseOption } from '../types';
 import RiskMeter from './RiskMeter';
@@ -96,7 +95,6 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
 
   return (
     <div className="space-y-10 pb-32">
-      {/* Utility Toolbar */}
       <div className="flex justify-end px-2">
          <button 
            onClick={handleCopyFullSummary}
@@ -107,7 +105,6 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
          </button>
       </div>
 
-      {/* 1. Literal Content Anchor */}
       <div className="p-12 bg-gradient-to-br from-slate-800 to-slate-900 rounded-[3rem] border border-slate-700/50 shadow-2xl relative overflow-hidden group">
         <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full -mr-40 -mt-40 blur-3xl pointer-events-none transition-all group-hover:bg-emerald-500/10 duration-1000" />
         <div className="flex items-center gap-3 mb-6">
@@ -121,7 +118,6 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
         </p>
       </div>
 
-      {/* 2. Confidence Signal */}
       <div className={`p-8 rounded-[2.5rem] border ${confColors[analysis.confidence.level]} flex items-start gap-6 shadow-sm backdrop-blur-md`}>
         <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-white/5 text-inherit shadow-lg">
           <HelpCircle size={24} strokeWidth={1.5} />
@@ -140,7 +136,6 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
       </div>
 
       <div className="space-y-8">
-        {/* 3. Expected Actions */}
         <Section title="What is likely expected" icon={<Target size={20} />} accent="emerald">
           <ul className="space-y-6">
             {analysis.whatIsExpected.map((item, i) => (
@@ -154,7 +149,6 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
           </ul>
         </Section>
 
-        {/* 4. Dual Columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Section title="Optional elements" icon={<Info size={20} />} accent="sage" defaultOpen={false}>
             <ul className="space-y-4">
@@ -178,23 +172,23 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
           </Section>
         </div>
 
-        {/* 5. The "NOT" Section */}
         <Section title="What this is NOT asking for" icon={<EyeOff size={20} />} accent="slate">
-          <div className="p-6 bg-slate-900/50 rounded-3xl border border-white/5">
-            <ul className="space-y-4">
+          <div className="p-8 bg-slate-950/40 rounded-3xl border border-dashed border-slate-700/50">
+            <ul className="space-y-5">
               {analysis.whatIsNotAskingFor.map((item, i) => (
                 <li key={i} className="flex gap-4 group">
-                  <div className="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center shrink-0 mt-1">
-                    <Check size={10} className="text-slate-500" />
+                  <div className="w-6 h-6 rounded-full bg-slate-800/50 flex items-center justify-center shrink-0 mt-1 border border-slate-700/30">
+                    <Check size={12} className="text-slate-600 group-hover:text-emerald-500 transition-colors" />
                   </div>
-                  <span className="text-slate-400 font-light italic group-hover:text-slate-200 transition-colors">{item}</span>
+                  <span className="text-slate-400 font-light italic text-lg group-hover:text-slate-200 transition-colors leading-relaxed">
+                    {item}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
         </Section>
 
-        {/* 6. Dynamics */}
         <Section title="Social Etiquette & Rules" icon={<Scale size={20} />} accent="emerald" defaultOpen={false}>
           <ul className="space-y-5">
             {analysis.hiddenRules.map((item, i) => (
@@ -206,7 +200,6 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
           </ul>
         </Section>
 
-        {/* 7. Impact Assessment */}
         <div className="p-12 rounded-[3.5rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 shadow-xl overflow-hidden relative">
           <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent"></div>
           <div className="flex items-center gap-3 mb-10">
@@ -217,7 +210,6 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
         </div>
       </div>
 
-      {/* 8. Choice Support */}
       <div className="pt-32 space-y-12">
         <div className="text-center space-y-4">
           <div className="w-16 h-[2px] bg-emerald-500/30 mx-auto mb-8"></div>
