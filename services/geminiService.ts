@@ -1,5 +1,4 @@
-
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 import { SYSTEM_INSTRUCTION } from "../constants";
 import { ContextMode, AnalysisResult } from "../types";
 
@@ -23,7 +22,7 @@ export async function analyzeInput(
     : { parts: [{ text: prompt }] };
 
   const response = await ai.models.generateContent({
-    model: "gemini-3-pro-preview",
+    model: 'gemini-3-pro-preview',
     contents,
     config: {
       systemInstruction: SYSTEM_INSTRUCTION + `\n\nCONTEXT: ${mode}\nSTRICT RULE: Do not use idioms or metaphors. Use literal, concrete language.`,
@@ -32,8 +31,14 @@ export async function analyzeInput(
     },
   });
 
+  const responseText = response.text;
+  
+  if (!responseText || typeof responseText !== 'string' || responseText.trim().length === 0) {
+    throw new Error("The translation engine returned an empty or invalid response. Please try again with more context.");
+  }
+
   try {
-    const rawData = JSON.parse(response.text);
+    const rawData = JSON.parse(responseText);
     return {
       ...rawData,
       id: crypto.randomUUID(),

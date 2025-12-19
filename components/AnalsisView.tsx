@@ -4,7 +4,7 @@ import RiskMeter from './RiskMeter';
 import { 
   Info, CheckCircle2, AlertTriangle, EyeOff, Scale, 
   MessageSquare, Copy, Check, ChevronDown, ChevronUp, 
-  ShieldCheck, HelpCircle, Sparkles, Zap, Target, Share
+  ShieldCheck, HelpCircle, Sparkles, Zap, Target, Share, ArrowLeft
 } from 'lucide-react';
 
 interface AnalysisViewProps {
@@ -95,6 +95,17 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
 
   return (
     <div className="space-y-10 pb-32">
+      {/* High-level summary & Risk Meter at the top for immediate scanning */}
+      <div className="p-12 rounded-[3.5rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 shadow-xl overflow-hidden relative">
+        <div className="absolute top-0 right-0 p-8 opacity-10">
+          <ShieldCheck size={48} className="text-emerald-400" />
+        </div>
+        <div className="flex items-center gap-3 mb-10">
+           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Complexity Score</span>
+        </div>
+        <RiskMeter score={analysis.riskMeter.score} explanation={analysis.riskMeter.explanation} />
+      </div>
+
       <div className="flex justify-end px-2">
          <button 
            onClick={handleCopyFullSummary}
@@ -149,6 +160,28 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
           </ul>
         </Section>
 
+        {/* Increased distinctiveness for the NOT section */}
+        <div className="relative">
+          <div className="absolute -inset-1 bg-gradient-to-r from-slate-800 to-slate-900 rounded-[2.8rem] blur-sm opacity-50"></div>
+          <Section title="What this is NOT asking for" icon={<EyeOff size={20} />} accent="slate">
+            <div className="p-8 bg-slate-950/60 rounded-3xl border border-dashed border-emerald-500/20 shadow-inner">
+              <p className="text-[10px] uppercase font-bold text-emerald-500/40 tracking-[0.2em] mb-4">Imagined Demands Removed:</p>
+              <ul className="space-y-5">
+                {analysis.whatIsNotAskingFor.map((item, i) => (
+                  <li key={i} className="flex gap-4 group">
+                    <div className="w-6 h-6 rounded-full bg-emerald-500/5 flex items-center justify-center shrink-0 mt-1 border border-emerald-500/10">
+                      <Check size={12} className="text-emerald-500 group-hover:scale-125 transition-transform" />
+                    </div>
+                    <span className="text-slate-200 font-light italic text-lg group-hover:text-emerald-100 transition-colors leading-relaxed">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Section>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Section title="Optional elements" icon={<Info size={20} />} accent="sage" defaultOpen={false}>
             <ul className="space-y-4">
@@ -172,23 +205,6 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
           </Section>
         </div>
 
-        <Section title="What this is NOT asking for" icon={<EyeOff size={20} />} accent="slate">
-          <div className="p-8 bg-slate-950/40 rounded-3xl border border-dashed border-slate-700/50">
-            <ul className="space-y-5">
-              {analysis.whatIsNotAskingFor.map((item, i) => (
-                <li key={i} className="flex gap-4 group">
-                  <div className="w-6 h-6 rounded-full bg-slate-800/50 flex items-center justify-center shrink-0 mt-1 border border-slate-700/30">
-                    <Check size={12} className="text-slate-600 group-hover:text-emerald-500 transition-colors" />
-                  </div>
-                  <span className="text-slate-400 font-light italic text-lg group-hover:text-slate-200 transition-colors leading-relaxed">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Section>
-
         <Section title="Social Etiquette & Rules" icon={<Scale size={20} />} accent="emerald" defaultOpen={false}>
           <ul className="space-y-5">
             {analysis.hiddenRules.map((item, i) => (
@@ -199,15 +215,6 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
             ))}
           </ul>
         </Section>
-
-        <div className="p-12 rounded-[3.5rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 shadow-xl overflow-hidden relative">
-          <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent"></div>
-          <div className="flex items-center gap-3 mb-10">
-             <ShieldCheck size={18} className="text-emerald-400" />
-             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Complexity Score</span>
-          </div>
-          <RiskMeter score={analysis.riskMeter.score} explanation={analysis.riskMeter.explanation} />
-        </div>
       </div>
 
       <div className="pt-32 space-y-12">
@@ -219,9 +226,9 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
           </p>
         </div>
         
-        <div className="grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 gap-12">
           {analysis.responseSupport.map((option, i) => (
-            <div key={i} className="p-10 rounded-[3.5rem] border border-slate-800 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-500 space-y-8 relative group overflow-hidden">
+            <div key={i} className="p-10 rounded-[3.5rem] border border-slate-800 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-500 space-y-8 relative group overflow-hidden shadow-2xl">
               <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Sparkles size={120} />
               </div>
@@ -234,7 +241,7 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
                   <div className="h-6 w-px bg-slate-800"></div>
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Risk</span>
-                    <div className="flex gap-0.5">
+                    <div className="flex gap-1">
                       {[1,2,3,4,5].map(r => (
                         <div key={r} className={`w-3 h-1 rounded-full ${r <= option.riskLevel ? 'bg-rose-500' : 'bg-slate-800'}`} />
                       ))}
@@ -243,13 +250,13 @@ Risk Meter: ${analysis.riskMeter.score}/5 - ${analysis.riskMeter.explanation}
                 </div>
               </div>
               
-              <div className="p-10 bg-slate-950/60 rounded-[2.5rem] border border-white/5 relative group/code overflow-hidden">
+              <div className="p-10 bg-slate-950/60 rounded-[2.5rem] border border-white/5 relative group/code overflow-hidden shadow-inner">
                 <p className="font-mono text-xl text-emerald-200 leading-relaxed pr-12">
                   {option.wording}
                 </p>
                 <button 
                   onClick={() => handleCopy(option.wording, `opt-${i}`)}
-                  className="absolute top-8 right-8 p-4 bg-slate-800 text-slate-400 hover:text-white rounded-2xl shadow-lg border border-white/5 transition-all opacity-0 group-hover/code:opacity-100 hover:scale-110 active:scale-90"
+                  className="absolute top-8 right-8 p-4 bg-slate-800 text-slate-400 hover:text-white rounded-2xl shadow-lg border border-white/5 transition-all opacity-100 sm:opacity-0 group-hover/code:opacity-100 hover:scale-110 active:scale-90"
                 >
                   {copiedId === `opt-${i}` ? <Check size={20} className="text-emerald-400" /> : <Copy size={20} />}
                 </button>
