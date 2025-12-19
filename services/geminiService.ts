@@ -6,7 +6,7 @@ export async function analyzeInput(
   input: string | { data: string; mimeType: string },
   mode: ContextMode
 ): Promise<AnalysisResult> {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
   const isImage = typeof input !== 'string';
   
   const prompt = isImage 
