@@ -3,7 +3,8 @@
     "allow": [
       "Bash(test:*)",
       "Bash(git check-ignore:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }
